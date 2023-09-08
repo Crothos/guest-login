@@ -1,7 +1,6 @@
+// Import MySQL and Express
 const express = require('express');
-// Import and require mysql2
 const mysql = require('mysql2');
-
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -22,9 +21,13 @@ const db = mysql.createConnection(
   console.log(`Connected to the checkin_db database.`)
 );
 
-// START TO CHANGE THESE THINGS, STEVO
-db.query('SELECT * FROM host', function (err, results) {
-    console.log(results);
+// QUERY CHECK
+db.query('SELECT * FROM host', function (err, employees) {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(employees);
+  }
 });
 
 // Default response for any other request (Not Found)
