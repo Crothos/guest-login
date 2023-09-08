@@ -3,33 +3,33 @@ const autocomplete = document.getElementById("host");
 const resultsHTML = document.getElementById("results");
 
 autocomplete.oninput = function () {
-    let results = [];
-    const userInput = this.value;
-    resultsHTML.innerHTML = "";
-    if (userInput.length > 0) {
-      results = getResults(userInput);
-      resultsHTML.style.display = "block";
-      for (i = 0; i < results.length; i++) {
-        resultsHTML.innerHTML += "<li>" + results[i] + "</li>";
-      }
-    }
-  };
+  let results = [];
+  const userInput = this.value;
+  resultsHTML.innerHTML = "";
 
-  function getResults(input) {
-    const results = [];
-    for (i = 0; i < data.length; i++) {
-      if (input === data[i].slice(0, input.length)) {
-        results.push(data[i]);
-      }
-    }
-    return results;
+  if (userInput.length > 0) {
+    // Make an AJAX/Fetch request to fetch data from the MySQL database
+    fetch(`http://localhost:3001/api/getData?input=${userInput}`)
+      .then((response) => response.json())
+      .then((data) => {
+        results = data;
+        resultsHTML.style.display = "block";
+
+        for (let i = 0; i < results.length; i++) {
+          resultsHTML.innerHTML += "<li>" + results[i] + "</li>";
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }
+};
 
-  resultsHTML.onclick = function (event) {
-    const setValue = event.target.innerText;
-    autocomplete.value = setValue;
-    this.innerHTML = "";
-  };
+resultsHTML.onclick = function (event) {
+  const setValue = event.target.innerText;
+  autocomplete.value = setValue;
+  this.innerHTML = "";
+};
 
 document.addEventListener('DOMContentLoaded', function () {
     
