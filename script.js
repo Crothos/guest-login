@@ -55,5 +55,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('name').value = '';
         document.getElementById('reason').value = '';
         document.getElementById('host').value = '';
+
+        // Redirect to the success page
+        window.location.href = 'success.html';
     });
 });
